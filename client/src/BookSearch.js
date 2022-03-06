@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Form, FloatingLabel, Button, Card, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { AppPagination } from './Pagination';
+import BtlModal from './BtlModal';
 
 const PAGE_SIZE = 9;
 
@@ -12,6 +13,8 @@ export default function BookSearch() {
   const [books, setBooks] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+  const [modalShow, setModalShow] = useState(false);
+  const [selectedBook, setSelectedBook] = useState();
 
   useEffect(() => {
     fetchGoogleApi();
@@ -113,15 +116,20 @@ export default function BookSearch() {
           <Row xs={1} md={3} className="g-4">
             {books.map((book, idx) => (
               <Col key={idx}>
-                <Card>
-                  <Card.Img variant="top" src="holder.js/100px160" />
+                <Card
+                  onClick={() => {
+                    console.log(book);
+                    setSelectedBook(book);
+                    setModalShow(true);
+                  }}
+                >
+                  <Card.Img
+                    variant="top"
+                    // src={book.volumeInfo.imageLinks['thumbnail']}
+                  />
                   <Card.Body>
                     <Card.Title>{book.volumeInfo.title}</Card.Title>
-                    <Card.Text>
-                      This is a longer card with supporting text below as a
-                      natural lead-in to additional content. This content is a
-                      little bit longer.
-                    </Card.Text>
+                    {/* <Card.Text>{book.volumeInfo.description}</Card.Text> */}
                   </Card.Body>
                 </Card>
               </Col>
@@ -138,6 +146,16 @@ export default function BookSearch() {
         </>
       ) : (
         <></>
+      )}
+
+      {modalShow && (
+        <div>
+          <BtlModal
+            show={true}
+            onHide={() => setModalShow(false)}
+            selectedBook={selectedBook}
+          />
+        </div>
       )}
     </>
   );
