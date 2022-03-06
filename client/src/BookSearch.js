@@ -38,7 +38,7 @@ export default function BookSearch() {
   }
 
   const getTotalPage = () => {
-    return totalItems / PAGE_SIZE;
+    return Math.ceil(totalItems / PAGE_SIZE);
   };
 
   const googleApi = () => {
