@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 
 var corOptions = {
-  origin: 'https://localhost:8081',
+  origin: 'https://localhost:3000',
 };
 
 // middleware
@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // testing api
 
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.json({ message: 'Hello Fullstack Developer' });
 });
 
