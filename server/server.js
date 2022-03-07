@@ -30,6 +30,7 @@ app.use(
 const bookmarkRouter = require('./routes/bookmarkRouter.js');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
+const bookSearchRouter = require('./routes/bookSearchRouter');
 
 app.use(
   '/api/bookmarks',
@@ -38,6 +39,7 @@ app.use(
 );
 app.use('/api/login', authRouter);
 app.use('/api/users', userRouter);
+app.use('/api/bookSearch', bookSearchRouter);
 
 // testing api
 
