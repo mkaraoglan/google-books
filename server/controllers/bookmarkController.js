@@ -4,11 +4,16 @@ const db = require('../models');
 const Bookmark = db.bookmarks;
 
 const addBookmark = async (req, res) => {
+  let bookInfo = req.body.book.volumeInfo;
   let bookmarkObject = {
-    bookId: req.body.bookId,
+    bookId: req.body.book.id,
+    title: bookInfo.title || '',
+    description: bookInfo.description || '',
+    imageLinks: bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : '',
   };
+  //check bookmark is allready exist
   let book = await Bookmark.findOne({
-    where: { bookId: req.body.bookId },
+    where: { bookId: req.body.book.id },
   }).then((result) => {
     return result;
   });
@@ -22,13 +27,21 @@ const addBookmark = async (req, res) => {
 };
 
 const getAllBookmarks = async (req, res) => {
-  console.log('getAllBookmarks');
   let bookmarks = await Bookmark.findAll({});
-  res.status(200).send(bookmarks);
+
+  let resp = {
+    items: bookmarks || [],
+    totalItems: bookmarks.length,
+  };
+
+  for (let item of bookmarks) {
+    item.dataValues['bookmarked'] = true;
+  }
+
+  res.status(200).send(resp);
 };
 
 const getBookmark = async (req, res) => {
-  console.log('getBookmark');
   let bookId = req.body.bookId;
   let bookmark = await Bookmark.findAll({
     where: { bookId: bookId },
@@ -41,7 +54,6 @@ const getBookmark = async (req, res) => {
 };
 
 const updateBookmark = async (req, res) => {
-  console.log('updateBookmark');
   let id = req.params.id;
 
   const bookmark = await Bookmark.update(req.body, { where: { id: id } });
@@ -53,6 +65,7 @@ const deleteBookmark = async (req, res) => {
   await Bookmark.destroy({
     where: { bookId: req.body.bookId },
   });
+
   res.status(200).send('bookmark deleted');
 };
 
