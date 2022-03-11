@@ -11,7 +11,17 @@ api for using googlebooks
 
 ````npm i # to install dependencies
 ``` npm start # to run backend application in port 8080
-* for client side (frontend) application please navigate into client folder and run in root
+
+- for client side (frontend) application please navigate into client folder and run in root
 ``` npm i # to install dependencies
 ``` npm start # to run client application in port 3000
 ````
+
+- create .env file on server folder
+
+# .env file should lookslike this:
+
+HOST=
+USER=
+PASSWORD=
+DB=
