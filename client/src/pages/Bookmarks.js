@@ -6,23 +6,18 @@ import axios from 'axios';
 
 const PAGE_SIZE = 9;
 
-export default function BookSearch() {
+export default function BookMarks() {
   const [books, setBooks] = useState([]);
   const [totalItems, setTotalItems] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const fetchBooks = useCallback(() => {
-    const getPageStartIndex = () => {
-      return (pageNumber - 1) * PAGE_SIZE;
-    };
-    let bodyObject = {
-      startIndex: getPageStartIndex(),
-    };
+  useEffect(() => {
     try {
-      axios.get('api/bookmarks/allBookmarks', bodyObject).then((res) => {
+      axios.get('api/bookmarks/allBookmarks').then((res) => {
         setTotalItems(res.data.totalItems);
-        if (res.data.totalItems) {
-          setBooks(res.data.items);
+        if (res.data.totalItems > 0) {
+          let booksReturn = res.data.items;
+          setBooks(booksReturn);
         } else {
           setBooks([]);
         }
@@ -31,15 +26,6 @@ export default function BookSearch() {
       console.error('Failed to log in');
     }
   }, [pageNumber]);
-
-  useEffect(() => {
-    fetchBooks();
-  }, [fetchBooks]);
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    fetchBooks();
-  }
 
   const getTotalPage = () => {
     return Math.ceil(totalItems / PAGE_SIZE);

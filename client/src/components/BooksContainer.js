@@ -10,17 +10,15 @@ const BooksContainer = ({ bookProps }, props) => {
   const queryApi = '/api/bookmarks';
 
   const addBookmark = (book) => {
-    axios
-      .post(queryApi + '/addBookmark/', { bookId: book.id })
-      .then(function () {
-        book.bookmarked = true;
-        let _book = document.getElementById(book.id);
-        _book.textContent = 'Delete Bookmark';
-      });
+    axios.post(queryApi + '/addBookmark/', { book }).then(function () {
+      book.bookmarked = true;
+      let _book = document.getElementById(book.id);
+      _book.textContent = 'Delete Bookmark';
+    });
   };
 
   const deleteBookmark = (book) => {
-    axios.delete(queryApi, { data: { bookId: book.id } }).then(function () {
+    axios.delete(queryApi, { data: { bookId: book.bookId } }).then(function () {
       book.bookmarked = false;
       let _book = document.getElementById(book.id);
       _book.textContent = 'Add Bookmark';
@@ -28,7 +26,6 @@ const BooksContainer = ({ bookProps }, props) => {
   };
 
   const changeBookmarkStatus = (book) => {
-    console.log(book);
     let isMarked = book.bookmarked;
 
     if (isMarked) {
@@ -55,21 +52,17 @@ const BooksContainer = ({ bookProps }, props) => {
     <>
       <StyledCard>
         {books.map((book, idx) => (
-          <>
+          <div key={idx}>
             <div className="book">
               <img
                 alt=""
                 variant="top"
-                src={
-                  book.volumeInfo.imageLinks
-                    ? book.volumeInfo.imageLinks['thumbnail']
-                    : noPicture
-                }
+                src={book.imageLinks ? book.imageLinks : noPicture}
               />
 
               <div className="bookInfo">
-                <h6>{book.volumeInfo.title}</h6>
-                <p>{shortenDescription(book.volumeInfo.description)}</p>
+                <h6>{book.title}</h6>
+                <p>{shortenDescription(book.description)}</p>
                 <Button
                   className="bookmarkBtn"
                   id={book.id}
@@ -81,7 +74,7 @@ const BooksContainer = ({ bookProps }, props) => {
                 </Button>
               </div>
             </div>
-          </>
+          </div>
         ))}
       </StyledCard>
     </>

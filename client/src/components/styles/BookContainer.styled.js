@@ -28,6 +28,7 @@ export const StyledCard = styled.div`
   }
 
   & .bookInfo > p {
+    font-size: small;
     width: 100%;
     text-align: left;
   }

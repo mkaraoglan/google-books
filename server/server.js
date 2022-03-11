@@ -24,7 +24,7 @@ app.use('/api/bookSearch', bookSearchRouter);
 
 // testing api
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello Fullstack Developer' });
+  res.status(200).send('Welcome');
 });
 
 // port

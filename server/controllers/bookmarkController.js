@@ -4,12 +4,12 @@ const db = require('../models');
 const Bookmark = db.bookmarks;
 
 const addBookmark = async (req, res) => {
-  let bookInfo = req.body.book.volumeInfo;
+  let bookInfo = req.body.book;
   let bookmarkObject = {
-    bookId: req.body.book.id,
+    bookId: bookInfo.bookId,
     title: bookInfo.title || '',
     description: bookInfo.description || '',
-    imageLinks: bookInfo.imageLinks ? bookInfo.imageLinks.thumbnail : '',
+    imageLinks: bookInfo.imageLinks ? bookInfo.imageLinks : '',
   };
   //check bookmark is allready exist
   let book = await Bookmark.findOne({

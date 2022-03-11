@@ -7,7 +7,6 @@ export default function Navigation() {
       <Container>
         <Navbar.Brand href="/">Google Books Api</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/booksearch">Book Search</Nav.Link>
           <Nav.Link href="/bookmarks">Booksmark</Nav.Link>
         </Nav>

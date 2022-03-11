@@ -10,6 +10,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    title: {
+      type: DataTypes.STRING,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    imageLinks: {
+      type: DataTypes.STRING,
+    },
   });
 
   return Bookmark;
