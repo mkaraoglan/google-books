@@ -16,8 +16,9 @@ const bookSearch = async (req, res) => {
   let googleApi = `https://www.googleapis.com/books/v1/volumes?startIndex=${startIndex}&maxResults=${PAGE_SIZE}&q=`;
 
   let queryApi =
-    googleApi + `"${keywords}"+inauthor:"${author}"+intitle:"${title}"`;
+    googleApi + `"${keywords}"+intitle:"${title}"+inauthor:"${author}"`;
 
+  console.log(queryApi);
   const response = await axios.get(queryApi);
 
   let resp = {
@@ -30,7 +31,6 @@ const bookSearch = async (req, res) => {
     let bookmark = await Bookmark.findAll({
       where: { bookId: item.id },
     });
-    console.log(bookmark);
     item['bookmarked'] = !!bookmark.length;
   }
   res.status(200).send(resp);

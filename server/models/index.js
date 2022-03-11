@@ -2,8 +2,6 @@ const dbConfig = require('../config/dbConfig.js');
 
 const { Sequelize, DataTypes } = require('sequelize');
 
-const jwt = require('jsonwebtoken');
-
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -31,10 +29,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require('./userModel.js')(sequelize, DataTypes);
 db.bookmarks = require('./bookmarkModel.js')(sequelize, DataTypes);
-
-db.users.hasMany(db.bookmarks);
 
 db.sequelize.sync({ force: false }).then(() => {
   console.log('Re-sync done!');

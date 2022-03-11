@@ -6,10 +6,10 @@ router.post('/addBookmark', bookmarkController.addBookmark);
 
 router.get('/allBookmarks', bookmarkController.getAllBookmarks);
 
-router.get('/:id', bookmarkController.getBookmark);
+router.get('/', bookmarkController.getBookmark);
 
-router.put('/:id', bookmarkController.updateBookmark);
+router.put('/', bookmarkController.updateBookmark);
 
-router.delete('/:id', bookmarkController.deleteBookmark);
+router.delete('/', bookmarkController.deleteBookmark);
 
 module.exports = router;

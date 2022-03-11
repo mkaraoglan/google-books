@@ -3,21 +3,22 @@ const db = require('../models');
 // create main model
 const Bookmark = db.bookmarks;
 
-const User = db.users;
-
-Bookmark.belongsTo(User, {
-  foreignKey: '1',
-  as: 'user',
-});
-
 const addBookmark = async (req, res) => {
-  console.log('addBookmark');
   let bookmarkObject = {
     bookId: req.body.bookId,
   };
-
-  const bookmark = await Bookmark.create(bookmarkObject);
-  res.status(200).send(bookmark);
+  let book = await Bookmark.findOne({
+    where: { bookId: req.body.bookId },
+  }).then((result) => {
+    return result;
+  });
+  // prevent double add
+  if (book == null) {
+    const bookmark = await Bookmark.create(bookmarkObject);
+    res.status(200).send(bookmark);
+  } else {
+    res.status(200).send('Allready added');
+  }
 };
 
 const getAllBookmarks = async (req, res) => {
@@ -28,9 +29,9 @@ const getAllBookmarks = async (req, res) => {
 
 const getBookmark = async (req, res) => {
   console.log('getBookmark');
-  let id = req.params.id;
+  let bookId = req.body.bookId;
   let bookmark = await Bookmark.findAll({
-    where: { bookId: id },
+    where: { bookId: bookId },
   });
   if (!bookmark.length) {
     res.status(404).send();
@@ -49,21 +50,11 @@ const updateBookmark = async (req, res) => {
 };
 
 const deleteBookmark = async (req, res) => {
-  let id = req.params.id;
   await Bookmark.destroy({
-    where: { id: id },
+    where: { bookId: req.body.bookId },
   });
   res.status(200).send('bookmark deleted');
 };
-
-// const userBookmark = async (req, res) => {
-//   const bookmark = await Bookmark.findAll({where: { user }})
-//   let id = req.params.id;
-//   await Bookmark.destroy({
-//     where: { id: id }
-//   });
-//   res.status(200).send('bookmark deleted');
-// }
 
 module.exports = {
   addBookmark,
