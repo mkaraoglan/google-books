@@ -21,7 +21,7 @@ api for using googlebooks
 
 .env file should lookslike this:
 
-HOST=
-USER=
-PASSWORD=
+HOST=**
+USER=**
+PASSWORD=\_\_
 DB=
