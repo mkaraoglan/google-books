@@ -19,7 +19,7 @@ api for using googlebooks
 
 - create .env file on server folder
 
-# .env file should lookslike this:
+.env file should lookslike this:
 
 HOST=
 USER=
